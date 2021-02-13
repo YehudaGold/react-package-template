@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PakeageTempale from '../../src';
+import reactPackageTemplate from 'react-package-template';
 
-import './App.less';
+import './App.css';
 
 const App = () => <div className="App">hello react</div>;
 
