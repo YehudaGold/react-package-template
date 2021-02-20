@@ -10,4 +10,4 @@ The template contains:
 
 ---
 
-Add your code in src/index, and example in example/src/index
+Add your code in src/index, and example in example/src/index.

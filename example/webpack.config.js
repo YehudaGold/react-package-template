@@ -27,12 +27,26 @@ module.exports = (env, options = {}) => ({
                 }
             },
             {
+                test: /\.js$/u,
+                enforce: 'pre',
+                use: 'source-map-loader'
+            },
+            {
+                test: /\.less$/u,
+                use: ['style-loader', 'css-loader', 'less-loader']
+            },
+            {
                 test: /\.css$/u,
                 use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(png|jpg|gif|ico|eot|svg|ttf|woff|woff2)$/u,
-                use: [{loader: 'url-loader'}]
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192
+                    }
+                }]
             }
         ]
     },

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import reactPackageTemplate from 'react-package-template';
 
-import './App.css';
+import './App.less';
 
 const App = () => <div className="App">hello react</div>;
 
