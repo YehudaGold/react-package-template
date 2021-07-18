@@ -8,22 +8,24 @@ import pkg from './package.json';
 
 const externals = [].concat(Object.keys(pkg.dependencies)).concat(Object.keys(pkg.peerDependencies));
 
-export default {
+const generateConfig = format => ({
     external: path => externals.some(external => path.startsWith(external)),
     input: 'src',
-    output: [{
-        file: 'dist/bundle.esm.js',
-        format: 'esm',
+    output: {
+        file: `dist/bundle.${format}.js`,
+        format,
         sourcemap: true
     },
-    {
-        file: 'dist/bundle.cjs.js',
-        format: 'cjs',
-        sourcemap: true
-    }],
     plugins: [
         babelPlugin({
-            babelHelpers: 'runtime'
+            babelHelpers: 'runtime',
+            plugins: [
+                ['@babel/plugin-transform-runtime', {corejs: {version: 3}, useESModules: format === 'esm'}]
+            ],
+            presets: [
+                ['@babel/preset-env', {loose: true, modules: false}],
+                '@babel/preset-react'
+            ]
         }),
         json(),
         url({
@@ -36,8 +38,8 @@ export default {
             sourcemap: true,
             output: 'dist/styles.css'
         }),
-        nodeResolverPlugin({
-            extensions: ['.js', '.jsx']
-        })
+        nodeResolverPlugin({extensions: ['.js', '.jsx']})
     ]
-};
+});
+
+export default ['esm', 'cjs'].map(generateConfig);
